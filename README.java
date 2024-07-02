@@ -1,4 +1,3 @@
-# app.js
 // app.js
 let editor;
 
