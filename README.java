@@ -52,3 +52,25 @@ function checkCode(code) {
     // 他のエラーチェックを追加
     return '正解です！';
 }
+function saveProgress(level, code) {
+    const progress = { level, code };
+    localStorage.setItem('gameProgress', JSON.stringify(progress));
+}
+
+function loadProgress() {
+    const progress = localStorage.getItem('gameProgress');
+    if (progress) {
+        const { level, code } = JSON.parse(progress);
+        currentLevel = level;
+        editor.setValue(code);
+        document.getElementById('level-selection').style.display = 'none';
+        document.getElementById('game-area').style.display = 'block';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', loadProgress);
+document.getElementById('submit-button').addEventListener('click', () => {
+    submitCode();
+    saveProgress(currentLevel, editor.getValue());
+});
+
