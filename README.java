@@ -25,6 +25,26 @@ function submitCode() {
 
 function checkCode(code) {
     // ここにコードの検証ロジックを実装
+    function checkCode(code, level) {
+    if (level === 'beginner') {
+        if (code.includes('if(x = 10)')) {
+            return 'エラー: if文の条件式が間違っています。';
+        }
+        // その他の初級レベルのエラーチェックを追加
+    } else if (level === 'intermediate') {
+        if (!code.includes('greet("John");')) {
+            return 'エラー: 関数の呼び出しが間違っています。';
+        }
+        // その他の中級レベルのエラーチェックを追加
+    } else if (level === 'advanced') {
+        if (code.includes('for(let i in arr)')) {
+            return 'エラー: for...inループの使用が適切ではありません。';
+        }
+        // その他の上級レベルのエラーチェックを追加
+    }
+    return '正解です！';
+}
+
     // 初期段階では簡単な文字列検索でエラーをチェック
     if (code.includes('if(x = 10)')) {
         return 'エラー: if文の条件式が間違っています。';
