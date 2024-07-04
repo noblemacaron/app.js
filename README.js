@@ -1,13 +1,6 @@
 let editor;
 let currentLevel;
 
-document.getElementById('submit-button').addEventListener('click', () => {
-    submitCode();
-    saveProgress(currentLevel, editor.getValue());
-});
-
-document.addEventListener('DOMContentLoaded', loadProgress);
-
 function startGame(level) {
     document.getElementById('level-selection').style.display = 'none';
     document.getElementById('game-area').style.display = 'block';
@@ -35,6 +28,7 @@ function submitCode() {
     } else {
         feedbackElement.className = 'incorrect';
     }
+    saveProgress(currentLevel, editor.getValue());
 }
 
 function checkCode(code, level) {
@@ -72,3 +66,6 @@ function loadProgress() {
         document.getElementById('game-area').style.display = 'block';
     }
 }
+
+document.addEventListener('DOMContentLoaded', loadProgress);
+document.getElementById('submit-button').addEventListener('click', submitCode);
