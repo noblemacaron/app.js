@@ -7,14 +7,14 @@ function startGame(level) {
     currentLevel = level;
 
     const codeSamples = {
-        beginner: "let x = 10\nif(x = 10) {\n  console.log('Hello');\n}",
+        beginner: "let x = 10;\nif(x = 10) {\n  console.log('Hello');\n}",
         intermediate: "function greet(name) {\n  return 'Hello, ' + name;\n}\ngreet('John');",
         advanced: "const arr = [1, 2, 3, 4, 5];\nfor(let i in arr) {\n  console.log(arr[i]);\n}"
     };
 
     editor = ace.edit("code-editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/javascript");
+    editor.setTheme("ace/theme/monokai"); // テーマを設定
+    editor.session.setMode("ace/mode/javascript"); // モードを設定
     editor.setValue(codeSamples[level]);
 }
 
@@ -25,6 +25,7 @@ function submitCode() {
     feedbackElement.innerText = feedback;
     if (feedback === '正解です！') {
         feedbackElement.className = 'correct';
+        setTimeout(resetGame, 2000); // 2秒待ってから難易度選択画面に戻る
     } else {
         feedbackElement.className = 'incorrect';
     }
@@ -59,13 +60,21 @@ function loadProgress() {
         const { level, code } = JSON.parse(progress);
         currentLevel = level;
         editor = ace.edit("code-editor");
-        editor.setTheme("ace/theme/monokai");
-        editor.session.setMode("ace/mode/javascript");
+        editor.setTheme("ace/theme/monokai"); // テーマを設定
+        editor.session.setMode("ace/mode/javascript"); // モードを設定
         editor.setValue(code);
         document.getElementById('level-selection').style.display = 'none';
         document.getElementById('game-area').style.display = 'block';
     }
 }
 
+function resetGame() {
+    document.getElementById('level-selection').style.display = 'block';
+    document.getElementById('game-area').style.display = 'none';
+    document.getElementById('feedback').innerText = ''; // フィードバックメッセージをクリアする
+    editor.setValue('');
+}
+
 document.addEventListener('DOMContentLoaded', loadProgress);
 document.getElementById('submit-button').addEventListener('click', submitCode);
+
